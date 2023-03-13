@@ -14,7 +14,7 @@ function App() {
     <Router>
     <div className="App">
       <Routes>
-      <Route exact path="/" element={<h1>Page Count: {count}</h1>}/>
+      <Route exact path="/" element={<h1 className="text-3xl font-bold">Page Count: {count}</h1>}/>
       <Route path="/test" element={<h1>Testing</h1>}/>
       </Routes>
     </div>
