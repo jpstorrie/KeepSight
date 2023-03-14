@@ -15,22 +15,14 @@ class PhotosController < ApplicationController
 
   # POST /photos
   def create
-    @photo = Photo.new(photo_params)
-
-    if @photo.save
-      render json: @photo, status: :created, location: @photo
-    else
-      render json: @photo.errors, status: :unprocessable_entity
-    end
+    @photo = Photo.create!(photo_params)
+    render json: @photo, status: :created
   end
 
   # PATCH/PUT /photos/1
   def update
-    if @photo.update(photo_params)
-      render json: @photo
-    else
-      render json: @photo.errors, status: :unprocessable_entity
-    end
+    @photo.update!(photo_params)
+    render json: @photo, status: :accepted
   end
 
   # DELETE /photos/1
@@ -46,6 +38,6 @@ class PhotosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def photo_params
-      params.require(:photo).permit(:name, :notes, :milestone, :child_id)
+      params.permit(:name, :notes, :milestone, :child_id)
     end
 end

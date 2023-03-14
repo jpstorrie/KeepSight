@@ -15,22 +15,14 @@ class ChildrenController < ApplicationController
 
   # POST /children
   def create
-    @child = Child.new(child_params)
-
-    if @child.save
-      render json: @child, status: :created, location: @child
-    else
-      render json: @child.errors, status: :unprocessable_entity
-    end
+    @child = Child.create!(child_params)
+      render json: @child, status: :created
   end
 
   # PATCH/PUT /children/1
   def update
-    if @child.update(child_params)
-      render json: @child
-    else
-      render json: @child.errors, status: :unprocessable_entity
-    end
+    if @child.update!(child_params)
+      render json: @child, status: :accepted
   end
 
   # DELETE /children/1
@@ -46,6 +38,6 @@ class ChildrenController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def child_params
-      params.require(:child).permit(:name, :user_id)
+      params.permit(:name, :user_id)
     end
 end

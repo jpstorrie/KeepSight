@@ -15,22 +15,14 @@ class JournalsController < ApplicationController
 
   # POST /journals
   def create
-    @journal = Journal.new(journal_params)
-
-    if @journal.save
-      render json: @journal, status: :created, location: @journal
-    else
-      render json: @journal.errors, status: :unprocessable_entity
-    end
+    @journal = Journal.create!(journal_params)
+    render json: @journal, status: :created
   end
 
   # PATCH/PUT /journals/1
   def update
     if @journal.update(journal_params)
-      render json: @journal
-    else
-      render json: @journal.errors, status: :unprocessable_entity
-    end
+    render json: @journal, status: :accepted
   end
 
   # DELETE /journals/1
@@ -46,6 +38,6 @@ class JournalsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def journal_params
-      params.require(:journal).permit(:name, :journal, :milestone, :child_id)
+      params.permit(:name, :journal, :milestone, :child_id)
     end
 end

@@ -15,22 +15,14 @@ class VideosController < ApplicationController
 
   # POST /videos
   def create
-    @video = Video.new(video_params)
-
-    if @video.save
-      render json: @video, status: :created, location: @video
-    else
-      render json: @video.errors, status: :unprocessable_entity
-    end
+    @video = Video.create!(video_params)
+    render json: @video, status: :created
   end
 
   # PATCH/PUT /videos/1
   def update
-    if @video.update(video_params)
-      render json: @video
-    else
-      render json: @video.errors, status: :unprocessable_entity
-    end
+    @video.update!(video_params)
+    render json: @video, status: :accepted
   end
 
   # DELETE /videos/1
@@ -46,6 +38,6 @@ class VideosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def video_params
-      params.require(:video).permit(:name, :notes, :milestone, :child_id)
+      params.permit(:name, :notes, :milestone, :child_id)
     end
 end
