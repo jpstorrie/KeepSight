@@ -16,9 +16,9 @@ function App() {
     <Router>
     <div className="App">
       <Routes>
+      <Route path="/login" element={<Login />}/>
       <Route exact path="/" element={<h1 className="text-3xl font-bold">Page Count: {count}</h1>}/>
       <Route path="/test" element={<h1>Testing</h1>}/>
-      <Route path="/login" element={<Login />}/>
       </Routes>
     </div>
     </Router>

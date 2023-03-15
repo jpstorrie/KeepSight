@@ -2,26 +2,26 @@ import { Icon } from "react-icons-kit";
 import {eyeOff, eye} from "react-icons-kit/feather";
 import {useState} from "react"
 
-export default function Login() {
+export default function NewUser() {
 
-  const initVals = { username: "", password:"" }
+  const initVals = { username: "", email:"", password:"" }
 
-  const [loginForm, setLoginForm] = useState(initVals)
+  const [newUserForm, setNewUserForm] = useState(initVals)
   const [isVis, setIsVis] = useState(false);
 
   function handleChange(e){
     const {name, value} = e.target
-    setLoginForm({...loginForm, [name]: value})
+    setNewUserForm({...newUserForm, [name]: value})
   }
 
-  function handleLogin(e){
+  function handleNewUser(e){
     e.preventDefault()
-    console.log(loginForm)
+    console.log(newUserForm)
 
-    // fetch("/login", {
+    // fetch("/newUser", {
     //   method: "POST",
     //   headers: "content-type: application/json",
-    //   body: JSON.stringify(loginForm)
+    //   body: JSON.stringify(newUserForm)
     // })
     // .then(r=>r.json())
     // .then(data=>console.log(data))
@@ -29,12 +29,18 @@ export default function Login() {
 
   return (
     <div>
-      <form onSubmit={handleLogin} autoComplete="on">
+      <form onSubmit={handleNewUser} autoComplete="on">
         <input
         name="username"
         onChange={handleChange}
         type="text"
         placeholder="Username"
+        autoComplete="username"/>
+        <input
+        name="email"
+        onChange={handleChange}
+        type="text"
+        placeholder="example@example.com"
         autoComplete="username"/>
         <input
           type={isVis? "text":"password"}
@@ -46,7 +52,7 @@ export default function Login() {
         <button className="flex justify-around items-center" onClick={()=>setIsVis(!isVis)}>
           <Icon className="" icon={isVis? eye : eyeOff} size={25} />
         </button>
-        <button type="submit">Login</button>
+        <button type="submit">Create Account</button>
       </form>
     </div>
   );
