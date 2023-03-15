@@ -1,5 +1,5 @@
 class VideosController < ApplicationController
-  before_action :set_video, only: %i[ show update destroy ]
+  # before_action :set_video, only: %i[ show update destroy ]
 
   # GET /videos
   def index
@@ -28,6 +28,7 @@ class VideosController < ApplicationController
   # DELETE /videos/1
   def destroy
     @video.destroy
+    head :no_content
   end
 
   private

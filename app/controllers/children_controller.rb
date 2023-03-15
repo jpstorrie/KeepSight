@@ -1,5 +1,5 @@
 class ChildrenController < ApplicationController
-  before_action :set_child, only: %i[ show update destroy ]
+  # before_action :set_child, only: %i[ show update destroy ]
 
   # GET /children
   def index
@@ -28,6 +28,7 @@ class ChildrenController < ApplicationController
   # DELETE /children/1
   def destroy
     @child.destroy
+    head :no_content
   end
 
   private
