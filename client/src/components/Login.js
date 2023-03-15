@@ -1,6 +1,5 @@
 import { Icon } from "react-icons-kit";
-import {eyeOff} from "react-icons-kit/feather";
-import {eye} from "react-icons-kit/feather";
+import {eyeOff, eye} from "react-icons-kit/feather";
 import {useState} from "react"
 
 export default function Login() {
@@ -8,18 +7,7 @@ export default function Login() {
   const initVals = { username: "", email:"", password:"" }
 
   const [loginForm, setLoginForm] = useState(initVals)
-  const [type, setType] = useState("password");
-  const [icon, setIcon] = useState(eyeOff);
-
-  const handleToggle = () => {
-    if (type === "password") {
-      setIcon(eye);
-      setType("text");
-    } else {
-      setIcon(eyeOff);
-      setType("password");
-    }
-  };
+  const [isVis, setIsVis] = useState(false);
 
   function handleChange(e){
     const {name, value} = e.target
@@ -55,15 +43,15 @@ export default function Login() {
         placeholder="example@example.com"
         autoComplete="username"/>
         <input
-          type={type}
+          type={isVis? "text":"password"}
           name="password"
           placeholder="Password"
           onChange={handleChange}
           autoComplete="current-password"
         />
-        <span className="flex justify-around items-center" onClick={handleToggle}>
-          <Icon className="" icon={icon} size={25} />
-        </span>
+        <button className="flex justify-around items-center" onClick={()=>setIsVis(!isVis)}>
+          <Icon className="" icon={isVis? eye : eyeOff} size={25} />
+        </button>
         <button type="submit">Login</button>
       </form>
     </div>
