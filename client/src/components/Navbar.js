@@ -1,19 +1,33 @@
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
-export default function Navbar(){
+export default function Navbar() {
 
     const navigate = useNavigate()
 
-    function handleClick(){
+    function handleClick() {
         fetch("/logout", {
             method: "DELETE"
         }).then(navigate("/login"))
     }
 
-    return(
-        <div className="flex-row  flex-nowrap">
-            <h1>Navbar here</h1>
-            {/* <button className="float-right" onClick={handleClick}>Logout</button> */}
+    return (
+        <div>
+            <nav
+                className="flex-wrap relative flex w-full justify-between bg-amber-500 py-2.5 shadow-md shadow-black/5">
+                <div className="flex w-full flex-wrap  justify-between px-6">
+                    {/* <a
+                        className="hidden-arrow float right flex whitespace-nowrap transition duration-150 ease-in-out motion-reduce:transition-none"
+                        href=""
+                        role="button"
+                        aria-expanded="false"> */}
+                        <img
+                            src="https://media.licdn.com/dms/image/D5603AQHu7Kj5X0ljIA/profile-displayphoto-shrink_200_200/0/1674073759784?e=1683158400&v=beta&t=QgI-3coAtrzRYgfYdxAvQvkLFarUmuH8kqqjlEHUqmI"
+                            className="rounded-full float-right"
+                            style={{ height: "25px", width: "25px" }}
+                            alt="Profile Picture" />
+                    {/* </a> */}
+                </div>
+            </nav>
         </div>
     )
 }

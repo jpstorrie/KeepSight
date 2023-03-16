@@ -6,7 +6,7 @@ import Children from "./components/Children"
 import NewUser from "./components/NewUser"
 
 
-function App() {
+export default function App() {
   const [user, setUser] = useState(null);
 
 
@@ -25,14 +25,14 @@ function App() {
   // if(errors) return <h1>{errors}</h1>
   if (!user) return (
     <Router>
-      <Navbar updateUser={updateUser}/>
+      <Navbar user={user} updateUser={updateUser}/>
       <Login updateUser={updateUser} />
     </Router>
   )
   return (
     <Router>
       <div className="App">
-        <Navbar updateUser={updateUser}/>
+        <Navbar user={user} updateUser={updateUser}/>
 
         <Routes>
           <Route path="/login" element={<Login updateUser={updateUser} />} />
@@ -44,5 +44,3 @@ function App() {
     </Router>
   );
 }
-
-export default App;

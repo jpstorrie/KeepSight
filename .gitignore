@@ -13,6 +13,7 @@
 !/log/.keep
 !/tmp/.keep
 /.vscode
+/notes
 
 # Ignore pidfiles, but keep the directory.
 /tmp/pids/*
