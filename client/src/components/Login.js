@@ -3,7 +3,8 @@ import {eyeOff, eye} from "react-icons-kit/feather";
 import {useState} from "react"
 import {useNavigate} from "react-router-dom"
 
-export default function Login() {
+export default function Login({updateUser}) {
+
   const navigate = useNavigate()
   const initVals = { username: "", password:"" }
 
@@ -17,15 +18,20 @@ export default function Login() {
 
   function handleLogin(e){
     e.preventDefault()
-    console.log(loginForm)
-
     fetch("/login", {
       method: "POST",
       headers: {"content-type":"application/json"},
       body: JSON.stringify(loginForm)
     })
-    .then(r=>r.json())
-    .then(navigate("/"))
+    .then(r=>{
+      if(r.ok){
+        r.json().then(user=>{
+        updateUser(user)
+        navigate("/")
+    })
+  }
+  else{r.json().then(message=>console.log(message.error))}
+  })
   }
 
   return (

@@ -2,34 +2,45 @@ import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./components/Login"
 import Navbar from "./components/Navbar"
+import Children from "./components/Children"
+import NewUser from "./components/NewUser"
 
 
 function App() {
-  const [count, setCount] = useState(0);
   const [user, setUser] = useState(null);
 
-  // fetch("/authorized")
-  // .then(r => {
-  //   if(r.ok){
-  //   }
-  // })
 
-  useEffect(() => {
-    fetch("/hello")
-      .then((r) => r.json())
-      .then((data) => setCount(data.count));
-  }, []);
+  useEffect(()=>{
+    fetch("/authorized")
+      .then(r => {
+        if (r.ok) { r.json().then((user => setUser(user))) }
+        else { setUser(null) }
+      })
+  },[])
 
+  const updateUser = (user) => setUser(user)
+
+
+
+  // if(errors) return <h1>{errors}</h1>
+  if (!user) return (
+    <Router>
+      <Navbar updateUser={updateUser}/>
+      <Login updateUser={updateUser} />
+    </Router>
+  )
   return (
     <Router>
-    <div className="App">
-      <Navbar />
-      <Routes>
-      <Route path="/login" element={<Login />}/>
-      <Route exact path="/" element={<h1 className="text-3xl font-bold">Page Count: {count}</h1>}/>
-      <Route path="/test" element={<h1>Testing</h1>}/>
-      </Routes>
-    </div>
+      <div className="App">
+        <Navbar updateUser={updateUser}/>
+
+        <Routes>
+          <Route path="/login" element={<Login updateUser={updateUser} />} />
+          <Route exact path="/" element={<Children />} />
+          <Route exact path="/" element={<Children />} />
+          <Route path="/users/new" element={<NewUser />} />
+        </Routes>
+      </div>
     </Router>
   );
 }
