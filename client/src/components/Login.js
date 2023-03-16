@@ -1,7 +1,6 @@
-import { Icon } from "react-icons-kit";
-import {eyeOff, eye} from "react-icons-kit/feather";
 import {useState} from "react"
 import {useNavigate} from "react-router-dom"
+import {AiFillEyeInvisible, AiFillEye} from "react-icons/ai"
 
 export default function Login({updateUser}) {
 
@@ -51,7 +50,7 @@ export default function Login({updateUser}) {
           autoComplete="current-password"
         />
         <button type="button" className="flex justify-around items-center" onClick={()=>setIsVis(!isVis)}>
-          <Icon className="" icon={isVis? eye : eyeOff} size={25} />
+          {isVis? <AiFillEye /> : <AiFillEyeInvisible/>}
         </button>
         <button type="submit">Login</button>
       </form>

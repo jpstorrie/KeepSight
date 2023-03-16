@@ -8,6 +8,10 @@ import NewUser from "./components/NewUser"
 
 export default function App() {
   const [user, setUser] = useState(null);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  document.documentElement.setAttribute('data-theme', isDarkMode);
+
 
 
   useEffect(()=>{
@@ -25,14 +29,14 @@ export default function App() {
   // if(errors) return <h1>{errors}</h1>
   if (!user) return (
     <Router>
-      <Navbar user={user} updateUser={updateUser}/>
+      <Navbar setDarkMode={setIsDarkMode} user={user} updateUser={updateUser}/>
       <Login updateUser={updateUser} />
     </Router>
   )
   return (
     <Router>
       <div className="App">
-        <Navbar user={user} updateUser={updateUser}/>
+        <Navbar user={user} setDarkMode={setIsDarkMode} updateUser={updateUser}/>
 
         <Routes>
           <Route path="/login" element={<Login updateUser={updateUser} />} />

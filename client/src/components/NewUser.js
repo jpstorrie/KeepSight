@@ -1,5 +1,4 @@
-import { Icon } from "react-icons-kit";
-import {eyeOff, eye} from "react-icons-kit/feather";
+import {AiFillEyeInvisible, AiFillEye} from "react-icons/ai"
 import {useState} from "react"
 
 export default function NewUser() {
@@ -50,7 +49,7 @@ export default function NewUser() {
           autoComplete="current-password"
         />
         <button className="flex justify-around items-center" onClick={()=>setIsVis(!isVis)}>
-          <Icon className="" icon={isVis? eye : eyeOff} size={25} />
+          {isVis? <AiFillEye /> : <AiFillEyeInvisible/>}
         </button>
         <button type="submit">Create Account</button>
       </form>
