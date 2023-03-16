@@ -1,9 +1,10 @@
 import { Icon } from "react-icons-kit";
 import {eyeOff, eye} from "react-icons-kit/feather";
 import {useState} from "react"
+import {useNavigate} from "react-router-dom"
 
 export default function Login() {
-
+  const navigate = useNavigate()
   const initVals = { username: "", password:"" }
 
   const [loginForm, setLoginForm] = useState(initVals)
@@ -18,13 +19,13 @@ export default function Login() {
     e.preventDefault()
     console.log(loginForm)
 
-    // fetch("/login", {
-    //   method: "POST",
-    //   headers: "content-type: application/json",
-    //   body: JSON.stringify(loginForm)
-    // })
-    // .then(r=>r.json())
-    // .then(data=>console.log(data))
+    fetch("/login", {
+      method: "POST",
+      headers: {"content-type":"application/json"},
+      body: JSON.stringify(loginForm)
+    })
+    .then(r=>r.json())
+    .then(navigate("/"))
   }
 
   return (
@@ -43,7 +44,7 @@ export default function Login() {
           onChange={handleChange}
           autoComplete="current-password"
         />
-        <button className="flex justify-around items-center" onClick={()=>setIsVis(!isVis)}>
+        <button type="button" className="flex justify-around items-center" onClick={()=>setIsVis(!isVis)}>
           <Icon className="" icon={isVis? eye : eyeOff} size={25} />
         </button>
         <button type="submit">Login</button>
