@@ -7,10 +7,14 @@ import NewUser from "./components/NewUser"
 
 
 export default function App() {
-  const [user, setUser] = useState(null);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const isSystemDark = window.matchMedia("(prefers-color-scheme: dark)").matches
 
-  document.documentElement.setAttribute('data-theme', isDarkMode);
+  const [darkMode, setDarkMode] = useState(isSystemDark);
+  const [user, setUser] = useState(null);
+
+  darkMode? document.documentElement.setAttribute('data-theme', "luxury"):document.documentElement.setAttribute('data-theme', "bumblebee")
+
+  const toggleDarkMode = ()=>setDarkMode(!darkMode)
 
 
 
@@ -29,17 +33,17 @@ export default function App() {
   // if(errors) return <h1>{errors}</h1>
   if (!user) return (
     <Router>
-      <Navbar setDarkMode={setIsDarkMode} user={user} updateUser={updateUser}/>
+      <Navbar toggleDarkMode={toggleDarkMode} darkMode={darkMode} user={user} updateUser={updateUser}/>
       <Login updateUser={updateUser} />
     </Router>
   )
   return (
     <Router>
       <div className="App">
-        <Navbar user={user} setDarkMode={setIsDarkMode} updateUser={updateUser}/>
+        <Navbar toggleDarkMode={toggleDarkMode} darkMode={darkMode} user={user} updateUser={updateUser}/>
 
         <Routes>
-          <Route path="/login" element={<Login updateUser={updateUser} />} />
+          {/* <Route path="/login" element={<Login updateUser={updateUser} />} /> */}
           <Route exact path="/" element={<Children />} />
           <Route exact path="/" element={<Children />} />
           <Route path="/users/new" element={<NewUser />} />
