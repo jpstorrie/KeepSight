@@ -1,6 +1,9 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { useForm } from "react-hook-form"
+import VideoForm from "./VideoForm"
+import PhotoForm from "./PhotoForm"
+import JournalForm from "./JournalForm"
+
 export default function ChildPage() {
     const { id } = useParams()
     const navigate = useNavigate()
@@ -11,7 +14,6 @@ export default function ChildPage() {
     const [journalVis, setJournalVis] = useState(false)
     const [videoVis, setVideoVis] = useState(false)
 
-    const {register, handleSubmit} = useForm()
 
     // TODO: get all photos, videos, and journals and put them into one
     // entry array to be sorted and displayed
@@ -23,18 +25,7 @@ export default function ChildPage() {
             .then(setChild)
     }, [])
 
-    function handleVideoSubmit(data){
-        e.preventDefault()
-        console.log(data)
-    }
-    function handlePhotoSubmit(data){
-        e.preventDefault()
-        console.log(data)
-    }
-    function handleJournalSubmit(data){
-        e.preventDefault()
-        console.log(data)
-    }
+
 
 
     if (child) {
@@ -50,66 +41,10 @@ export default function ChildPage() {
                         <h2 className="card-title ">{child.name}</h2>
                     </div>
                 </div>
-                {photoVis ?
-                    <div>
-                        <button onClick={() => setPhotoVis(false)}>Go Back</button>
-                        <h1>PhotoForm</h1>
-                        <form onSubmit={handleSubmit(handlePhotoSubmit)}>
-                        <div className="form-control w-full max-w-xs">
-                            <label className="label">
-                                <span className="label-text">What do you want to call this entry?</span>
-                            </label>
-                            <input required type="text" placeholder="Name" className="input input-bordered w-full max-w-xs" 
-                            {...register("name")}/>
-                            <label className="label">
-                                <span className="label-text">What do you want to call this entry?</span>
-                            </label>
-                            <input required type="text" placeholder="Name" className="input input-bordered w-full max-w-xs" 
-                            {...register("notes")}/>
-                            <label className="label">
-                                <span className="label-text">What Milestone is this for?</span>
-                            </label>
-                            <input type="text" placeholder="Milestone" className="input input-bordered w-full max-w-xs"
-                            {...register("milestone")}/>
-                        </div>
-                        </form>
-                    </div> : null}
 
-                {videoVis ?
-                    <div>
-                        <button onClick={() => setVideoVis(false)}>Go Back</button>
-                        <h1>Video Form</h1>
-                        <form onSubmit={handleSubmit(handleVideoSubmit)}>
-                        <div className="form-control w-full max-w-xs">
-                            <label className="label">
-                                <span className="label-text">What is your name?</span>
-                            </label>
-                            <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
-                            <label className="label">
-                                <span className="label-text">What is your name?</span>
-                            </label>
-                            <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
-                        </div>
-                        </form>
-                    </div> : null}
-
-                {journalVis ?
-                    <div>
-                        <button onClick={() => setJournalVis(false)}>Go Back</button>
-                        <h1>Journal Form</h1>
-                        <form onSubmit={handleSubmit(handleJournalSubmit)}>
-                        <div className="form-control w-full max-w-xs">
-                            <label className="label">
-                                <span className="label-text">What is your name?</span>
-                            </label>
-                            <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
-                            <label className="label">
-                                <span className="label-text">What is your name?</span>
-                            </label>
-                            <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
-                        </div>
-                        </form>
-                    </div> : null}
+                {photoVis ? <PhotoForm cID={child.id} setPhotoVis={setPhotoVis}/> : null}
+                {videoVis ? <VideoForm cID={child.id} setVideoVis={setVideoVis}/>: null}
+                {journalVis ? <JournalForm cID={child.id} setJournalVis={setJournalVis}/>: null}
 
                 {(photoVis || videoVis || journalVis) ? null :
                     <div className="entry-box">
