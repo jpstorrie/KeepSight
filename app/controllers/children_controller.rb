@@ -1,17 +1,16 @@
 class ChildrenController < ApplicationController
-  # before_action :set_child, only: %i[ show update destroy ]
+  before_action :set_child, only: %i[ show update destroy ]
 
   # GET /children
   def index
-    @children = Child.all
-    #Child.where(user_id: current_user.id)
-
-    render json: @children
+    # @children = Child.all
+    @children = Child.where(user_id: current_user.id)
+    render json: @children, status: :ok
   end
 
   # GET /children/1
   def show
-    render json: @child
+    render json: @child, status: :ok
   end
 
   # POST /children
@@ -22,8 +21,8 @@ class ChildrenController < ApplicationController
 
   # PATCH/PUT /children/1
   def update
-    if @child.update!(child_params)
-      render json: @child, status: :accepted
+    @child.update!(child_params)
+    render json: @child, status: :accepted
   end
 
   # DELETE /children/1
@@ -40,6 +39,6 @@ class ChildrenController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def child_params
-      params.permit(:name, :user_id)
+      params.permit(:name, :user_id, :pfp)
     end
 end

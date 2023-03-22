@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./components/Login"
 import Navbar from "./components/Navbar"
 import Children from "./components/Children"
+import ChildPage from "./components/ChildPage"
 import NewUser from "./components/NewUser"
 
 
@@ -34,7 +35,7 @@ export default function App() {
   if (!user) return (
     <Router>
       <Navbar toggleDarkMode={toggleDarkMode} darkMode={darkMode} user={user} updateUser={updateUser}/>
-      <Login updateUser={updateUser} />
+      <Login updateUser={updateUser}  user={user}/>
     </Router>
   )
   return (
@@ -43,10 +44,10 @@ export default function App() {
         <Navbar toggleDarkMode={toggleDarkMode} darkMode={darkMode} user={user} updateUser={updateUser}/>
 
         <Routes>
-          {/* <Route path="/login" element={<Login updateUser={updateUser} />} /> */}
-          <Route exact path="/" element={<Children />} />
-          <Route exact path="/" element={<Children />} />
+          <Route path="/login" element={<Login updateUser={updateUser} user={user} />} />
           <Route path="/users/new" element={<NewUser />} />
+          <Route exact path="/" element={<Children user={user}/>} />
+          <Route exact path="/children/:id" element={<ChildPage/>} />
         </Routes>
       </div>
     </Router>

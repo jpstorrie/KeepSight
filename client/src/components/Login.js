@@ -2,7 +2,7 @@ import {useState} from "react"
 import {useNavigate} from "react-router-dom"
 import {AiFillEyeInvisible, AiFillEye} from "react-icons/ai"
 
-export default function Login({updateUser}) {
+export default function Login({updateUser, user}) {
 
   const navigate = useNavigate()
   const initVals = { username: "", password:"" }
@@ -33,25 +33,38 @@ export default function Login({updateUser}) {
   })
   }
 
+  if(user){
+    return (
+    <div className="flex justify-center">
+    <h1>Looks like you're already logged in!</h1>
+    <h4>Go to the <a href="/" className="link">Homepage</a></h4>
+    </div>
+    )
+  }
+
   return (
-    <div>
-      <form onSubmit={handleLogin} autoComplete="on">
+    <div className="m-4 flex justify-center rounded border-2 border-neutral-content">
+      <form onSubmit={handleLogin} autoComplete="on" className="flex-wrap">
         <input
+        className="input input-bordered bg-base-300"
         name="username"
         onChange={handleChange}
         type="text"
         placeholder="Username"
         autoComplete="username"/>
-        <input
-          type={isVis? "text":"password"}
-          name="password"
-          placeholder="Password"
-          onChange={handleChange}
-          autoComplete="current-password"
-        />
-        <button type="button" className="flex justify-around items-center" onClick={()=>setIsVis(!isVis)}>
-          {isVis? <AiFillEye /> : <AiFillEyeInvisible/>}
-        </button>
+        <div className="mb-4 flex relative">
+          <input
+            className="input input-bordered bg-base-300"
+            type={isVis? "text":"password"}
+            name="password"
+            placeholder="Password"
+            onChange={handleChange}
+            autoComplete="current-password"
+          />
+          <button type="button" className="absolute right-1 my-4" onClick={()=>setIsVis(!isVis)}>
+            {isVis? <AiFillEye /> : <AiFillEyeInvisible/>}
+          </button>
+        </div>
         <button type="submit">Login</button>
       </form>
     </div>
