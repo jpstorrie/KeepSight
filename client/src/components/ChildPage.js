@@ -18,6 +18,7 @@ export default function ChildPage() {
     // TODO: get all photos, videos, and journals and put them into one
     // entry array to be sorted and displayed
     // const [entries, setEntries] = useState(null)
+    const [photos, setPhotos] = useState([])
 
     useEffect(() => {
         fetch(`/children/${id}`)
@@ -25,7 +26,10 @@ export default function ChildPage() {
             .then(setChild)
     }, [])
 
-
+    useEffect(()=>{
+        fetch("/photos")
+        .then(r => r.json().then(setPhotos))
+    },[])
 
 
     if (child) {
@@ -54,7 +58,7 @@ export default function ChildPage() {
                             <button onClick={() => setJournalVis(true)}>New Journal</button>
                         </div>
                         <div className="entries">
-                            { }
+                            {/* <img src={photos[0].file}  /> */}
                         </div>
                     </div>}
             </div>

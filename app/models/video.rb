@@ -1,4 +1,4 @@
 class Video < ApplicationRecord
   belongs_to :child
-  has_onde_attached :video
+  has_one_attached :video
 end

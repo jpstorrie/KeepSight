@@ -1,12 +1,17 @@
 import {useForm} from "react-hook-form"
 
-export default function JournalForm({setJournalVis}){
+export default function JournalForm({setJournalVis, cID}){
     const {register, handleSubmit} = useForm()
 
     function handleJournalSubmit(data){
-        console.log(data)
+        data = {...data, ["child_id"]: cID}
 
-        setJournalVis(false)
+        fetch("/journals", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify(data)
+        }).then(r=>r.json().then(console.log))
+        .then(setJournalVis(false))
     }
 
 
@@ -20,11 +25,14 @@ return(
             <label className="label">
                 <span className="label-text">What would you like to name this journal?</span>
             </label>
-            <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+            <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs"
+            {...register("name")}/>
             <label className="label">
-                <span className="label-text">What is your name?</span>
+                <span className="label-text">Write your journal here...</span>
             </label>
-            <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" />
+            <textarea type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs"
+            {...register("journal")}/>
+            <button type="submit">Submit</button>
         </div>
     </form>
 </div>
