@@ -1,4 +1,9 @@
 class VideoSerializer < ActiveModel::Serializer
-  attributes :id, :name, :notes, :milestone
+  include Rails.application.routes.url_helpers
+  attributes :id, :name, :notes, :milestone, :video
   has_one :child
+
+  def video
+    rails_blob_path(object.video, only_path: true) if object.video.attached?
+  end
 end
