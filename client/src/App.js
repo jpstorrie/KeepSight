@@ -35,7 +35,10 @@ export default function App() {
   if (!user) return (
     <Router>
       <Navbar toggleDarkMode={toggleDarkMode} darkMode={darkMode} user={user} updateUser={updateUser}/>
-      <Login updateUser={updateUser}  user={user}/>
+      <Routes>
+      <Route path="/login" element={<Login updateUser={updateUser} user={user}/>}/>
+      <Route path="/users/new" element={<NewUser updateUser={updateUser} />} />
+      </Routes>
     </Router>
   )
   return (

@@ -43,6 +43,7 @@ export default function Login({updateUser, user}) {
   }
 
   return (
+    <div>
     <div className="m-4 flex justify-center rounded border-2 border-neutral-content">
       <form onSubmit={handleLogin} autoComplete="on" className="flex-wrap">
         <input
@@ -67,6 +68,8 @@ export default function Login({updateUser, user}) {
         </div>
         <button type="submit">Login</button>
       </form>
+    </div>
+      <h3>Don't have an account? <button className="btn" onClick={()=>navigate("/users/new")}>Create one!</button></h3>
     </div>
   );
 }
