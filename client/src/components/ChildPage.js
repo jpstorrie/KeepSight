@@ -3,6 +3,9 @@ import { useEffect, useState } from "react"
 import VideoForm from "./VideoForm"
 import PhotoForm from "./PhotoForm"
 import JournalForm from "./JournalForm"
+import JournalCard from "./JournalCard"
+import VideoCard from "./VideoCard"
+import PhotoCard from "./PhotoCard"
 
 export default function ChildPage() {
     const { id } = useParams()
@@ -14,25 +17,33 @@ export default function ChildPage() {
     const [journalVis, setJournalVis] = useState(false)
     const [videoVis, setVideoVis] = useState(false)
 
-
-    // TODO: get all photos, videos, and journals and put them into one
-    // entry array to be sorted and displayed
-    // const [entries, setEntries] = useState(null)
-    const [photos, setPhotos] = useState([])
+    const [entries, setEntries] = useState(null)
 
     useEffect(() => {
         fetch(`/children/${id}`)
             .then(r => r.json())
-            .then(setChild)
+            .then(data=>{
+                setChild(data)
+                setEntries(data.videos.concat(data.journals.concat(data.photos)))
+            })
     }, [])
+    console.log(entries)
 
-    useEffect(()=>{
-        fetch("/photos")
-        .then(r => r.json().then(setPhotos))
-    },[])
+    // if(entries){
+        const mappedEntries = entries ? entries.map(entry => {
+        if(entry.video){
+            return <VideoCard entry={entry}/>
+        }
+        if(entry.photo){
+            return <PhotoCard entry={entry}/>
+        }
+        else{
+            return <JournalCard entry={entry}/>
+        }
+    }) : null
+    // }
 
-
-    if (child) {
+    if (child && entries) {
         return (
             <div className="flex">
                 <div className="card bg-primary w-36 h-52 m-4">
@@ -46,9 +57,9 @@ export default function ChildPage() {
                     </div>
                 </div>
 
-                {photoVis ? <PhotoForm cID={child.id} setPhotoVis={setPhotoVis}/> : null}
-                {videoVis ? <VideoForm cID={child.id} setVideoVis={setVideoVis}/>: null}
-                {journalVis ? <JournalForm cID={child.id} setJournalVis={setJournalVis}/>: null}
+                {photoVis ? <PhotoForm cID={child.id} setPhotoVis={setPhotoVis} /> : null}
+                {videoVis ? <VideoForm cID={child.id} setVideoVis={setVideoVis} /> : null}
+                {journalVis ? <JournalForm cID={child.id} setJournalVis={setJournalVis} /> : null}
 
                 {(photoVis || videoVis || journalVis) ? null :
                     <div className="entry-box">
@@ -57,8 +68,16 @@ export default function ChildPage() {
                             <button onClick={() => setVideoVis(true)}>New Video</button>
                             <button onClick={() => setJournalVis(true)}>New Journal</button>
                         </div>
-                        <div className="entries">
-                            {/* <img src={photos[0].file}  /> */}
+                        <div className="absolute rounded-xl overflow-auto right-0 m-4 bottom-0 border-4 border-base-content border-spacing-4 w-10/12 h-5/6">
+                            <div className="flex h-7 bg-secondary">
+                                <h4>Name</h4>
+                                <h4>Type</h4>
+                                <h4>Date</h4>
+                            </div>
+                            <div className="">
+                            {mappedEntries}
+                            </div>
+                            {/* {sortedEntries} */}
                         </div>
                     </div>}
             </div>

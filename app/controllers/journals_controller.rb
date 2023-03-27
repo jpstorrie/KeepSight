@@ -4,6 +4,8 @@ class JournalsController < ApplicationController
   # GET /journals
   def index
     @journals = Journal.all
+    # Journal.where(current_user.children :child_id)
+    # current_user
     render json: @journals
   end
 
@@ -20,7 +22,7 @@ class JournalsController < ApplicationController
 
   # PATCH/PUT /journals/1
   def update
-    if @journal.update(journal_params)
+    @journal.update(journal_params)
     render json: @journal, status: :accepted
   end
 
