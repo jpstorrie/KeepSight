@@ -10,7 +10,7 @@ export default function Navbar({ updateUser, user, toggleDarkMode, darkMode }) {
             method: "DELETE"
         })
         .then(updateUser(null))
-        .then(navigate("/login"))
+        .then(navigate("/"))
     }
 
     if (!user) {
