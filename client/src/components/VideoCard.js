@@ -1,5 +1,6 @@
 import Modal from "react-modal"
 import { useState } from "react"
+import VideoDownloadBtn from "./VideoDownloadBtn"
 
 export default function VideoCard({ dateFormatter, entry }) {
     const [vis, setVis] = useState(false)
@@ -19,6 +20,7 @@ export default function VideoCard({ dateFormatter, entry }) {
                     <source src={entry.video} title={entry.name} />
                 </video>
                 <button className="btn btn-sm btn-circle absolute right-2 top-2" onClick={() => setVis(false)}>✕</button>
+                <VideoDownloadBtn videoId={entry.id}/>
             </Modal>
         </>
     )

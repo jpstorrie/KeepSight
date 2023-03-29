@@ -31,6 +31,11 @@ class VideosController < ApplicationController
     head :no_content
   end
 
+  def download_video
+    video = Video.find(params[:id])
+    send_data video.video.download, filename: video.name.to_s, type: video.video.content_type
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_video

@@ -39,10 +39,10 @@ export default function ChildPage() {
     }
 
     const optionFilter = entries ? entries.filter(entry => {
-        if(option === "journal" && entry.journal){return entry}
+        if(option==="all"){return entry}
+        else if(option === "journal" && entry.journal){return entry}
         else if(option === "photo" && entry.photo){return entry}
         else if(option === "video" && entry.video){return entry}
-        else{return entry}
     })
     :null;
 

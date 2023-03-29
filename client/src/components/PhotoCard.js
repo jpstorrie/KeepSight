@@ -1,5 +1,6 @@
 import { useState } from "react"
 import ReactModal from "react-modal"
+import PhotoDownloadBtn from "./PhotoDownloadBtn"
 
 export default function PhotoCard({ dateFormatter, entry }) {
 
@@ -19,6 +20,7 @@ export default function PhotoCard({ dateFormatter, entry }) {
                     className="border-4 rounded-lg my-4 md:w-4/12 md:p-4 border-neutral-content bg-base-200"
                     src={entry.photo} alt={entry.name}/>
                 <button className="btn btn-sm btn-circle absolute right-2 top-2" onClick={() => setVis(false)}>✕</button>
+                <PhotoDownloadBtn photoId={entry.id} />
 
             </ReactModal>
         </>

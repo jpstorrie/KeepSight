@@ -15,6 +15,10 @@ Rails.application.routes.draw do
 
   get '/hello', to: 'application#hello_world'
 
+  get 'videos/download/:id', to: 'videos#download_video'
+
+  get 'photos/download/:id', to: 'photos#download_photo'
+
   get '*path',
       to: 'fallback#index',
       constraints: ->(req) { !req.xhr? && req.format.html? }

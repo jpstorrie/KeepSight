@@ -43,8 +43,8 @@ export default function Login({updateUser, user}) {
   }
 
   return (
-    <div>
-    <div className="m-4 flex justify-center rounded border-2 border-neutral-content">
+    <div className="grid justify-items-center ">
+    <div className="m-4 flex justify-center border-4 rounded-lg my-4 md:h-full md:w-6/12 md:p-4 border-neutral-content bg-base-200">
       <form onSubmit={handleLogin} autoComplete="on" className="flex-wrap">
         <input
         className="input input-bordered bg-base-300"
@@ -53,7 +53,7 @@ export default function Login({updateUser, user}) {
         type="text"
         placeholder="Username"
         autoComplete="username"/>
-        <div className="mb-4 flex relative">
+        <div className="mb-4 flex relative mt-3">
           <input
             className="input input-bordered bg-base-300"
             type={isVis? "text":"password"}
@@ -66,10 +66,13 @@ export default function Login({updateUser, user}) {
             {isVis? <AiFillEye /> : <AiFillEyeInvisible/>}
           </button>
         </div>
-        <button type="submit">Login</button>
+        <button className="relative left-16 btn btn-secondary" type="submit">Login</button>
       </form>
     </div>
-      <h3>Don't have an account? <button className="btn" onClick={()=>navigate("/users/new")}>Create one!</button></h3>
+    <div className="m-10 flex">
+      <h3 className="relative top-1 pr-2">Don't have an account?</h3>
+      <button className="btn btn-sm btn-outline btn-primary" onClick={()=>navigate("/users/new")}>Create one!</button>
+    </div>
     </div>
   );
 }

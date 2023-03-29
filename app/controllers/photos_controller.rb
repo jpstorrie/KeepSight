@@ -13,6 +13,11 @@ class PhotosController < ApplicationController
     render json: @photo
   end
 
+  def download_photo
+    photo = Photo.find(params[:id])
+    send_data photo.photo.download, filename: photo.name.to_s, type: photo.photo.content_type
+  end
+
   # POST /photos
   def create
     @photo = Photo.create!(photo_params)
