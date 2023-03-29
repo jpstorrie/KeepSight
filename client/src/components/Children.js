@@ -4,7 +4,7 @@ import ChildCard from "./ChildCard";
 
 export default function Children({ user }) {
     const [formVis, toggleFormVis] = useState(false);
-    const [children, setChildren] = useState([]);
+    const [children, setChildren] = useState(null);
     const [picture, setPicture] = useState(null)
     const [name, setName] = useState("")
 
@@ -39,6 +39,7 @@ export default function Children({ user }) {
 
     const childCards = children ? children.map((child) => { return (<ChildCard key={child.id} child={child} />) }) : null
 
+    if(children){
     return (
         <div>
             <div className="pt-4 pl-4">
@@ -65,4 +66,5 @@ export default function Children({ user }) {
             </div>
         </div>
     )
+} else return (<h1 className="flex justify-center pt-20">LOOKS LIKE YOU DON'T HAVE ANY CHILDREN WITH YOUR ACCOUNT, TRY <a>ADDING SOME</a></h1>)
 }

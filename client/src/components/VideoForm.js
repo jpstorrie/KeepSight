@@ -1,4 +1,5 @@
 import { useState } from "react"
+import {FaLongArrowAltLeft} from "react-icons/fa"
 
 export default function VideoForm({ setVideoVis, cID }) {
     const [video, setVideo] = useState(null)
@@ -25,7 +26,7 @@ export default function VideoForm({ setVideoVis, cID }) {
     }
     return (
         <div>
-            <button onClick={() => setVideoVis(false)}>Go Back</button>
+            <button className="btn btn-primary"onClick={() => setVideoVis(false)}><FaLongArrowAltLeft/>Go Back</button>
             <h1>Video Form</h1>
             <form onSubmit={handleVideoSubmit}>
                 <div className="form-control w-full max-w-xs">

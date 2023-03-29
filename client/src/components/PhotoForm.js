@@ -1,4 +1,5 @@
 import { useState } from "react"
+import {FaLongArrowAltLeft} from "react-icons/fa"
 
 export default function PhotoForm({setPhotoVis, cID}){
 const [photo, setPhoto] = useState(null)
@@ -26,7 +27,7 @@ function handlePhotoSubmit(e){
 
 return (
 <div>
-    <button type="button" onClick={() => setPhotoVis(false)}>Go Back</button>
+    <button type="button" className="btn btn-secondary" onClick={() => setPhotoVis(false)}><FaLongArrowAltLeft/>Go Back</button>
     <h1>PhotoForm</h1>
     <form onSubmit={handlePhotoSubmit}>
         <div className="form-control w-full max-w-xs">

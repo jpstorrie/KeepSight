@@ -1,6 +1,6 @@
 class PhotoSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id, :name, :notes, :milestone, :photo
+  attributes :id, :name, :notes, :milestone, :photo, :created_at
   has_one :child
 
   def photo

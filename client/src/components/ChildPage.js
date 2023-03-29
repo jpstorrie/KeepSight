@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import VideoForm from "./VideoForm"
 import PhotoForm from "./PhotoForm"
@@ -6,11 +6,13 @@ import JournalForm from "./JournalForm"
 import JournalCard from "./JournalCard"
 import VideoCard from "./VideoCard"
 import PhotoCard from "./PhotoCard"
+// import { BiSearchAlt } from "react-icons/bi"
 
 export default function ChildPage() {
     const { id } = useParams()
-    const navigate = useNavigate()
 
+    const [searchInput, setSearchInput] = useState("")
+    const [option, setOption] = useState("all")
     const [child, setChild] = useState(null)
     //visibility of forms
     const [photoVis, setPhotoVis] = useState(false)
@@ -22,25 +24,52 @@ export default function ChildPage() {
     useEffect(() => {
         fetch(`/children/${id}`)
             .then(r => r.json())
-            .then(data=>{
+            .then(data => {
                 setChild(data)
                 setEntries(data.videos.concat(data.journals.concat(data.photos)))
             })
     }, [])
-    console.log(entries)
 
-    // if(entries){
-        const mappedEntries = entries ? entries.map(entry => {
-        if(entry.video){
-            return <VideoCard entry={entry}/>
+    function dateFormatter(item) {
+        const date = new Date(item.created_at)
+        let dateFormat = []
+        dateFormat.push(date.getMonth() + 1, date.getUTCDate(), date.getFullYear())
+        dateFormat = dateFormat.join('-')
+        return dateFormat
+    }
+
+    const optionFilter = entries ? entries.filter(entry => {
+        if(option === "journal" && entry.journal){return entry}
+        else if(option === "photo" && entry.photo){return entry}
+        else if(option === "video" && entry.video){return entry}
+        else{return entry}
+    })
+    :null;
+
+    const searchFilter = entries ? optionFilter.filter((entry) => {
+        const entryDate = dateFormatter(entry)
+        if (entry.name.toLowerCase().includes(searchInput.toLowerCase()) || entryDate.includes(searchInput)) {
+            return entry
         }
-        if(entry.photo){
-            return <PhotoCard entry={entry}/>
+        else return null
+    }) : null;
+
+
+    const sortedEntries = entries ? searchFilter.sort(function (a, b) {
+        return a.created_at.localeCompare(b.created_at);
+    }) : null;
+
+    const mappedEntries = sortedEntries ? sortedEntries.map(entry => {
+        if (entry.video) {
+            return <VideoCard dateFormatter={dateFormatter} entry={entry} />
         }
-        else{
-            return <JournalCard entry={entry}/>
+        if (entry.photo) {
+            return <PhotoCard dateFormatter={dateFormatter} entry={entry} />
         }
-    }) : null
+        else {
+            return <JournalCard dateFormatter={dateFormatter} entry={entry} />
+        }
+    }) : null;
     // }
 
     if (child && entries) {
@@ -62,22 +91,27 @@ export default function ChildPage() {
                 {journalVis ? <JournalForm cID={child.id} setJournalVis={setJournalVis} /> : null}
 
                 {(photoVis || videoVis || journalVis) ? null :
-                    <div className="entry-box">
+                    <div>
                         <div className="button-group">
-                            <button onClick={() => setPhotoVis(true)}>New Photo</button>
-                            <button onClick={() => setVideoVis(true)}>New Video</button>
-                            <button onClick={() => setJournalVis(true)}>New Journal</button>
+                            <button className="btn btn-sm m-2 btn-outline relative left-14 top-4" onClick={() => setPhotoVis(true)}>New Photo</button>
+                            <button className="btn btn-sm m-2 btn-outline relative left-14 top-4" onClick={() => setVideoVis(true)}>New Video</button>
+                            <button className="btn btn-sm m-2 btn-outline relative left-14 top-4" onClick={() => setJournalVis(true)}>New Journal</button>
+                            <input onChange={(e) => setSearchInput(e.target.value)}
+                                className="bg-primary absolute input right-8 my-3" placeholder={`Search`} />
                         </div>
-                        <div className="absolute rounded-xl overflow-auto right-0 m-4 bottom-0 border-4 border-base-content border-spacing-4 w-10/12 h-5/6">
-                            <div className="flex h-7 bg-secondary">
+                        <div className="absolute rounded-xl overflow-auto right-0 m-4 bottom-0 border-4 border-base-content border-spacing-4 w-10/12 h-5/6 ">
+                            <div className="flex h-8 bg-secondary justify-between pl-2 pr-4 pt-1">
                                 <h4>Name</h4>
-                                <h4>Type</h4>
+                                <select onChange={(e)=>setOption(e.target.value)} className="h-6" >
+                                    <option selected hidden>Type</option>
+                                    <option value="all">All</option>
+                                    <option value="journal">Journals</option>
+                                    <option value="photo">Photos</option>
+                                    <option value="video">Videos</option>
+                                </select>
                                 <h4>Date</h4>
                             </div>
-                            <div className="">
                             {mappedEntries}
-                            </div>
-                            {/* {sortedEntries} */}
                         </div>
                     </div>}
             </div>

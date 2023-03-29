@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form"
-
+import {FaLongArrowAltLeft} from "react-icons/fa"
 export default function JournalForm({ setJournalVis, cID }) {
     const { register, handleSubmit } = useForm()
 
@@ -18,7 +18,7 @@ export default function JournalForm({ setJournalVis, cID }) {
 
     return (
         <div>
-            <button onClick={() => setJournalVis(false)}>Go Back</button>
+            <button className="btn btn-primary"onClick={() => setJournalVis(false)}><FaLongArrowAltLeft/>Go Back</button>
             <h1>Journal Form</h1>
             <form onSubmit={handleSubmit(handleJournalSubmit)}>
                 <div className="form-control w-full max-w-xs">
