@@ -69,7 +69,7 @@ export default function ChildPage() {
         }
         if (entry.photo) {
             return <PhotoCard key={`${entry.id}-photo`} dateFormatter={dateFormatter} entry={entry} />
-        }
+        } 
         else {
             return <JournalCard key={`${entry.id}-journal`} dateFormatter={dateFormatter} entry={entry} />
         }

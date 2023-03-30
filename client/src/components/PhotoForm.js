@@ -26,31 +26,35 @@ function handlePhotoSubmit(e){
 }
 
 return (
-<div>
-    <button type="button" className="btn btn-secondary" onClick={() => setPhotoVis(false)}><FaLongArrowAltLeft/>Go Back</button>
-    <h1>PhotoForm</h1>
-    <form onSubmit={handlePhotoSubmit}>
-        <div className="form-control w-full max-w-xs">
-            <label className="label">
-                <span className="label-text">What do you want to call this entry?</span>
-            </label>
-            <input required type="text" placeholder="Name" className="input input-bordered w-full max-w-xs"
-                onChange={(e)=>setName(e.target.value)}/>
-            <label className="label">
-                <span className="label-text">Jot your notes for this entry here?</span>
-            </label>
-            <textarea required placeholder="Notes" className="input input-bordered w-full max-w-xs"
-                onChange={(e)=>setNotes(e.target.value)}/>
-            <label className="label">
-                <span className="label-text">What Milestone is this for?</span>
-            </label>
-            <input type="text" placeholder="Milestone" className="input input-bordered w-full max-w-xs"
-                onChange={(e)=>setMilestone(e.target.value)}/>
-            <input required type="file" accept="image/*" placeholder="Profile Photo" className="file-input file-input-bordered w-full max-w-xs"
-            onChange={(e)=> setPhoto(e.target.files[0])}
-            />
-            <button className="btn btn-outline" type="submit">Submit</button>
+    <div className="flex">
+            <button className="btn btn-primary mt-20"onClick={() => setPhotoVis(false)}><FaLongArrowAltLeft/>Go Back</button>
+            <div className="relative left-44">
+            <h1 className="font-bold">Add a Photo</h1>
+            <form className="border-4 border-base-content rounded-xl" onSubmit={handlePhotoSubmit}>
+                <div className="form-control w-full max-w-xs">
+                    <label className="label">
+                        <span className="label-text">WHAT DO YOU WANT TO CALL THIS ENTRY?</span>
+                    </label>
+                    <input required type="text" placeholder="Name" className="input input-bordered w-full max-w-xs"
+                        onChange={(e) => setName(e.target.value)} />
+                    <label className="label my-2">
+                        <span className="label-text">JOT YOUR NOTES FOR THIS ENTRY HERE</span>
+                    </label>
+                    <textarea required placeholder="Notes" className="input input-bordered w-full max-w-xs"
+                        onChange={(e) => setNotes(e.target.value)} />
+                    <label className="label my-2">
+                        <span className="label-text">WHAT MILESTONE IS THIS FOR?</span>
+                    </label>
+                    <input type="text" placeholder="Milestone" className="input input-bordered w-full max-w-xs"
+                        onChange={(e) => setMilestone(e.target.value)} />
+                    <label className="label my-2">
+                        <span className="label-text">UPLOAD YOUR VIDEO HERE</span>
+                    </label>
+                    <input required type="file" onChange={(e) => setPhoto(e.target.files[0])} accept="photo/*" placeholder="Photo" className="file-input file-input-bordered w-full max-w-xs"
+                    />
+                </div>
+                    <button className="btn btn-outline m-2" type="submit">Submit</button>
+            </form>
+            </div>
         </div>
-    </form>
-</div>
 )}

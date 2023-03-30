@@ -24,31 +24,36 @@ export default function VideoForm({ setVideoVis, cID, addData }) {
         .then(setVideoVis(false))
     }
     return (
-        <div>
-            <button className="btn btn-primary"onClick={() => setVideoVis(false)}><FaLongArrowAltLeft/>Go Back</button>
-            <h1>Video Form</h1>
-            <form onSubmit={handleVideoSubmit}>
+        <div className="flex">
+            <button className="btn btn-primary mt-20"onClick={() => setVideoVis(false)}><FaLongArrowAltLeft/>Go Back</button>
+            <div className="relative left-44">
+            <h1 className="font-bold">Add a Video</h1>
+            <form className="border-4 border-base-content rounded-xl" onSubmit={handleVideoSubmit}>
                 <div className="form-control w-full max-w-xs">
                     <label className="label">
-                        <span className="label-text">What do you want to call this entry?</span>
+                        <span className="label-text">WHAT DO YOU WANT TO CALL THIS ENTRY?</span>
                     </label>
                     <input required type="text" placeholder="Name" className="input input-bordered w-full max-w-xs"
                         onChange={(e) => setName(e.target.value)} />
-                    <label className="label">
-                        <span className="label-text">Jot your notes for this entry here?</span>
+                    <label className="label my-2">
+                        <span className="label-text">JOT YOUR NOTES FOR THIS ENTRY HERE</span>
                     </label>
                     <textarea required placeholder="Notes" className="input input-bordered w-full max-w-xs"
                         onChange={(e) => setNotes(e.target.value)} />
-                    <label className="label">
-                        <span className="label-text">What Milestone is this for?</span>
+                    <label className="label my-2">
+                        <span className="label-text">WHAT MILESTONE IS THIS FOR?</span>
                     </label>
                     <input type="text" placeholder="Milestone" className="input input-bordered w-full max-w-xs"
                         onChange={(e) => setMilestone(e.target.value)} />
+                    <label className="label my-2">
+                        <span className="label-text">UPLOAD YOUR VIDEO HERE</span>
+                    </label>
                     <input required type="file" onChange={(e) => setVideo(e.target.files[0])} accept="video/*" placeholder="Video" className="file-input file-input-bordered w-full max-w-xs"
                     />
-                    <button className="btn btn-outline" type="submit">Submit</button>
                 </div>
+                    <button className="btn btn-outline m-2" type="submit">Submit</button>
             </form>
+            </div>
         </div>
     )
 }
