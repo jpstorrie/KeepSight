@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form"
 import {FaLongArrowAltLeft} from "react-icons/fa"
-export default function JournalForm({ setJournalVis, cID }) {
+export default function JournalForm({ setJournalVis, cID, addData }) {
     const { register, handleSubmit } = useForm()
 
     function handleJournalSubmit(data) {
@@ -10,7 +10,7 @@ export default function JournalForm({ setJournalVis, cID }) {
             method: "POST",
             headers: { "content-type": "application/json" },
             body: JSON.stringify(data)
-        }).then(r => r.json().then(console.log))
+        }).then(r => r.json().then(data=>addData(data)))
             .then(setJournalVis(false))
     }
 

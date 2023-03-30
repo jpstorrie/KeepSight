@@ -1,7 +1,7 @@
 import { useState } from "react"
 import {FaLongArrowAltLeft} from "react-icons/fa"
 
-export default function PhotoForm({setPhotoVis, cID}){
+export default function PhotoForm({setPhotoVis, cID, addData}){
 const [photo, setPhoto] = useState(null)
 const [milestone, setMilestone] = useState(null)
 const [notes, setNotes] = useState(null)
@@ -21,7 +21,7 @@ function handlePhotoSubmit(e){
         method: "POST",
         body: formData
     }).then(r=>r.json()
-    .then(console.log))
+    .then(data=>addData(data)))
     .then(setPhotoVis(false))
 }
 
@@ -49,7 +49,7 @@ return (
             <input required type="file" accept="image/*" placeholder="Profile Photo" className="file-input file-input-bordered w-full max-w-xs"
             onChange={(e)=> setPhoto(e.target.files[0])}
             />
-            <button type="submit">Submit</button>
+            <button className="btn btn-outline" type="submit">Submit</button>
         </div>
     </form>
 </div>

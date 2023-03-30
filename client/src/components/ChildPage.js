@@ -30,6 +30,10 @@ export default function ChildPage() {
             })
     }, [])
 
+    function addData(item){
+        setEntries([...entries, item])
+    }
+
     function dateFormatter(item) {
         const date = new Date(item.created_at)
         let dateFormat = []
@@ -61,20 +65,20 @@ export default function ChildPage() {
 
     const mappedEntries = sortedEntries ? sortedEntries.map(entry => {
         if (entry.video) {
-            return <VideoCard dateFormatter={dateFormatter} entry={entry} />
+            return <VideoCard key={`${entry.id}-video`} dateFormatter={dateFormatter} entry={entry} />
         }
         if (entry.photo) {
-            return <PhotoCard dateFormatter={dateFormatter} entry={entry} />
+            return <PhotoCard key={`${entry.id}-photo`} dateFormatter={dateFormatter} entry={entry} />
         }
         else {
-            return <JournalCard dateFormatter={dateFormatter} entry={entry} />
+            return <JournalCard key={`${entry.id}-journal`} dateFormatter={dateFormatter} entry={entry} />
         }
     }) : null;
-    // }
+
 
     if (child && entries) {
         return (
-            <div className="flex">
+            <div className="flex w-max h-max">
                 <div className="card bg-primary w-36 h-52 m-4">
                     <div className="avatar">
                         <div className="px-10 py-10">
@@ -86,24 +90,25 @@ export default function ChildPage() {
                     </div>
                 </div>
 
-                {photoVis ? <PhotoForm cID={child.id} setPhotoVis={setPhotoVis} /> : null}
-                {videoVis ? <VideoForm cID={child.id} setVideoVis={setVideoVis} /> : null}
-                {journalVis ? <JournalForm cID={child.id} setJournalVis={setJournalVis} /> : null}
+                {photoVis ? <PhotoForm cID={child.id} addData={addData} setPhotoVis={setPhotoVis} /> : null}
+                {videoVis ? <VideoForm cID={child.id} addData={addData}  setVideoVis={setVideoVis} /> : null}
+                {journalVis ? <JournalForm cID={child.id} addData={addData} setJournalVis={setJournalVis} /> : null}
 
                 {(photoVis || videoVis || journalVis) ? null :
                     <div>
                         <div className="button-group">
-                            <button className="btn btn-sm m-2 btn-outline relative left-14 top-4" onClick={() => setPhotoVis(true)}>New Photo</button>
-                            <button className="btn btn-sm m-2 btn-outline relative left-14 top-4" onClick={() => setVideoVis(true)}>New Video</button>
-                            <button className="btn btn-sm m-2 btn-outline relative left-14 top-4" onClick={() => setJournalVis(true)}>New Journal</button>
+                            <button className="btn btn-sm m-2 btn-outline md:relative md:left-6 md:top-4" onClick={() => setPhotoVis(true)}>New Photo</button>
+                            <button className="btn btn-sm m-2 btn-outline md:relative md:left-6 md:top-4" onClick={() => setVideoVis(true)}>New Video</button>
+                            <button className="btn btn-sm m-2 btn-outline md:relative md:left-6 md:top-4" onClick={() => setJournalVis(true)}>New Journal</button>
                             <input onChange={(e) => setSearchInput(e.target.value)}
                                 className="bg-primary absolute input right-8 my-3" placeholder={`Search`} />
                         </div>
-                        <div className="absolute rounded-xl overflow-auto right-0 m-4 bottom-0 border-4 border-base-content border-spacing-4 w-10/12 h-5/6 ">
+                        <div className="md:fixed my-8 mr-4 ml-8 rounded-xl overflow-auto border-4 border-base-content"
+                        style={{height: "-webkit-fill-available", width: "-webkit-fill-available"}}>
                             <div className="flex h-8 bg-secondary justify-between pl-2 pr-4 pt-1">
                                 <h4>Name</h4>
-                                <select onChange={(e)=>setOption(e.target.value)} className="h-6" >
-                                    <option selected hidden>Type</option>
+                                <select onChange={(e)=>setOption(e.target.value)} className="h-6" value={"DEFAULT"}>
+                                    <option disabled hidden value="DEFAULT">Type</option>
                                     <option value="all">All</option>
                                     <option value="journal">Journals</option>
                                     <option value="photo">Photos</option>

@@ -4,8 +4,9 @@
 
 body {
   min-height: 100vh;
+  min-width: 100vh;
   /* background-image: url("/public/dots.jpeg"); */
-  background-size: 100%;
+  /* background-size: 100%; */
 }
 
 .App-logo {

@@ -1,7 +1,7 @@
 import { useState } from "react"
 import {FaLongArrowAltLeft} from "react-icons/fa"
 
-export default function VideoForm({ setVideoVis, cID }) {
+export default function VideoForm({ setVideoVis, cID, addData }) {
     const [video, setVideo] = useState(null)
     const [milestone, setMilestone] = useState(null)
     const [notes, setNotes] = useState(null)
@@ -20,9 +20,8 @@ export default function VideoForm({ setVideoVis, cID }) {
         fetch("/videos", {
             method: "POST",
             body: formData
-        }).then(r => r.json().then(console.log))
-
-        setVideoVis(false)
+        }).then(r => r.json().then(data=>addData(data)))
+        .then(setVideoVis(false))
     }
     return (
         <div>
@@ -47,7 +46,7 @@ export default function VideoForm({ setVideoVis, cID }) {
                         onChange={(e) => setMilestone(e.target.value)} />
                     <input required type="file" onChange={(e) => setVideo(e.target.files[0])} accept="video/*" placeholder="Video" className="file-input file-input-bordered w-full max-w-xs"
                     />
-                    <button type="submit">Submit</button>
+                    <button className="btn btn-outline" type="submit">Submit</button>
                 </div>
             </form>
         </div>

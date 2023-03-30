@@ -1,3 +1,4 @@
+import {MdFileDownload} from "react-icons/md"
 const VideoDownloadBtn = ({ videoId }) => {
     const handleDownload = async () => {
         const response = await fetch(`/videos/download/${videoId}`);
@@ -12,7 +13,7 @@ const VideoDownloadBtn = ({ videoId }) => {
     };
 
     return (
-        <button onClick={handleDownload}>Download Video</button>
+        <button onClick={handleDownload} className="btn btn-sm btn-active"><MdFileDownload/>Download Video</button>
     );
 };
 

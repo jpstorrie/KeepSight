@@ -1,4 +1,4 @@
-
+import {MdFileDownload} from "react-icons/md"
 
 const PhotoDownloadBtn = ({ photoId }) => {
     const handleDownload = async () => {
@@ -14,7 +14,7 @@ const PhotoDownloadBtn = ({ photoId }) => {
     };
 
     return (
-      <button onClick={handleDownload}>Download Photo</button>
+      <button onClick={handleDownload} className="btn btn-sm btn-active"><MdFileDownload />Download Photo</button>
     );
   };
 

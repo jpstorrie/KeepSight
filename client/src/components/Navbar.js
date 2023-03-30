@@ -37,10 +37,10 @@ export default function Navbar({ updateUser, user, toggleDarkMode, darkMode }) {
                             src="https://media.licdn.com/dms/image/D5603AQHu7Kj5X0ljIA/profile-displayphoto-shrink_200_200/0/1674073759784?e=1683158400&v=beta&t=QgI-3coAtrzRYgfYdxAvQvkLFarUmuH8kqqjlEHUqmI"
                             className="rounded-full float-right" style={{ height: "25px", width: "25px" }} />
                         </label>
-                        <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                        <ul tabIndex={0} className="dropdown-content menu p-2 shadow-2xl bg-base-100 rounded-box w-52">
                             <li className="bg"><button  onClick={toggleDarkMode}>{darkMode ? <BsLightbulbFill /> : <BsLightbulbOffFill />}</button></li>
                             <li className="bg"><button onClick={()=>navigate("/")}>Children</button></li>
-                            <li className="bg"><button onClick={()=>navigate("/user/profile")}>Profile</button></li>
+                            {/* <li className="bg"><button onClick={()=>navigate("/user/profile")}>Profile</button></li> */}
                             <li className="bg"><button onClick={handleClick}>Logout</button></li>
                         </ul>
                     </div>
