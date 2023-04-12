@@ -44,6 +44,10 @@ export default function Login({updateUser, user}) {
 
   return (
     <div className="grid justify-items-center ">
+      <div className="flex-wrap text-center">
+        <h1 className="pt-3 font-">WELCOME TO KEEPSIGHT!</h1>
+        <h1 className="pt-1 font-">PLEASE LOGIN</h1>
+      </div>
     <div className="m-4 flex justify-center border-4 rounded-lg my-4 md:h-full md:w-6/12 md:p-4 border-neutral-content bg-base-200">
       <form onSubmit={handleLogin} autoComplete="on" className="flex-wrap">
         <input

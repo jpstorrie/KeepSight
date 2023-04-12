@@ -15,7 +15,6 @@ export default function Children({ user }) {
             .then((data) => setChildren(data));
     }, []);
 
-
     const submitForm = (e) => {
         e.preventDefault();
         if (picture == null) {
@@ -49,6 +48,7 @@ export default function Children({ user }) {
     }
     return (
         <div>
+            <h1 className="font-bold text-2xl">Welcome {user.username}</h1>
             {formVis? null :
             <div className="pt-14 flex justify-center">
                 {childCards}
