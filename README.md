@@ -1,24 +1,29 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### KeepSight is a simple project that implements React and Ruby on Rails to provide a simple way to design and organize photos and video of specific children(or even pets).
 
-Things you may want to cover:
+### With a simple GUI built using TailwindCSS and DaisyUI, website navigation is simple.
 
-* Ruby version
 
-* System dependencies
+## This project is currently not deployed and only runs locally.
+## To run it, follow the instructions below
 
-* Configuration
 
-* Database creation
+## Running Locally
+To get started, clone this repository to your machine.
 
-* Database initialization
+Once cloned, change into the directory of the repository.
 
-* How to run the test suite
+When you are in the directory of the repo on your local machine, run the followind commands.
+```console
+rails db:create
+rails db:migrate
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+You can then start the rails server in this tab by running the command `rails s`.
 
-* Deployment instructions
+Now in another tab of the same directory, you can run the command `npm start --prefix client` to start the React app on your local machine.
 
-* ...
+This should automatically boot up a tab with the website up and running.
+
+You are now free to use the app as you wish.
