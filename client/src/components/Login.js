@@ -2,7 +2,7 @@ import {useState} from "react"
 import {useNavigate} from "react-router-dom"
 import {AiFillEyeInvisible, AiFillEye} from "react-icons/ai"
 
-export default function Login({updateUser, user}) {
+export default function Login({updateUser, user, darkMode}) {
 
   const navigate = useNavigate()
   const initVals = { username: "", password:"" }
@@ -75,7 +75,7 @@ export default function Login({updateUser, user}) {
     </div>
     <div className="m-10 flex">
       <h3 className="relative top-1 pr-2">Don't have an account?</h3>
-      <button className="btn btn-sm btn-outline btn-primary" onClick={()=>navigate("/users/new")}>Create one!</button>
+      <button className={darkMode ? "btn btn-sm btn-outline btn-primary" : "btn btn-sm btn-outline"} onClick={()=>navigate("/users/new")}>Create one!</button>
     </div>
     </div>
   );

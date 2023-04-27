@@ -6,6 +6,10 @@ export default function Navbar({ updateUser, user, toggleDarkMode, darkMode }) {
     const navigate = useNavigate()
 
     async function handleClick() {
+        const body = document.querySelector("body")
+        body.className = darkMode ? "darkbackground" : "background"
+        body.style.background = ""
+
         fetch("/logout", {
             method: "DELETE"
         })
