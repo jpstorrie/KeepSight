@@ -13,10 +13,10 @@ export default function App() {
   const [darkMode, setDarkMode] = useState(isSystemDark);
   const [user, setUser] = useState(null);
 
-  darkMode? document.documentElement.setAttribute('data-theme', "luxury"):document.documentElement.setAttribute('data-theme', "bumblebee")
+  darkMode ? document.documentElement.setAttribute('data-theme', "luxury"):document.documentElement.setAttribute('data-theme', "bumblebee")
 
   const toggleDarkMode = ()=>setDarkMode(!darkMode)
-
+  const body = document.querySelector("body")
 
 
   useEffect(()=>{
@@ -32,7 +32,13 @@ export default function App() {
 
 
   // if(errors) return <h1>{errors}</h1>
-  if (!user) return (
+  if (!user){
+    const body = document.querySelector("body")
+    body.style.backgroundColor = "#556"
+    body.style.backgroundImage = "linear-gradient(30deg, #445 12%, transparent 12.5%, transparent 87%, #445 87.5%, #445), linear-gradient(150deg, #445 12%, transparent 12.5%, transparent 87%, #445 87.5%, #445), linear-gradient(30deg, #445 12%, transparent 12.5%, transparent 87%, #445 87.5%, #445), linear-gradient(150deg, #445 12%, transparent 12.5%, transparent 87%, #445 87.5%, #445), linear-gradient(60deg, #99a 25%, transparent 25.5%, transparent 75%, #99a 75%, #99a), linear-gradient(60deg, #99a 25%, transparent 25.5%, transparent 75%, #99a 75%, #99a)"
+    body.style.size = "80px 140px"
+
+    return (
     <Router>
       <Navbar toggleDarkMode={toggleDarkMode} darkMode={darkMode} user={user} updateUser={updateUser}/>
       <Routes>
@@ -41,6 +47,7 @@ export default function App() {
       </Routes>
     </Router>
   )
+}
   return (
     <Router>
       <div className="App">
