@@ -48,9 +48,9 @@ export default function Children({ user }) {
     }
     return (
         <div>
-            <h1 className="font-bold text-2xl">Welcome {user.username}</h1>
+            <h1 className="font-bold text-3xl pt-6">Welcome {user.username}!</h1>
             {formVis? null :
-            <div className="pt-14 flex justify-center">
+            <div className="pt-8 flex justify-center">
                 {childCards}
             </div>}
             <div className="pt-4">
