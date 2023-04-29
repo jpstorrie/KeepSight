@@ -5,19 +5,14 @@ import { useNavigate } from "react-router-dom"
 export default function NewUser({ updateUser }) {
   const navigate = useNavigate()
 
-  const [recieveEmails, setRecieveEmails] = useState(false);
-  const initVals = { username: "", email: "", password: "", recieveEmails: recieveEmails }
   const [loginForm, setLoginForm] = useState({username: "", password: "",})
-  const [newUserForm, setNewUserForm] = useState(initVals)
   const [isVis, setIsVis] = useState(false);
-
-  function handleChange(e) {
-    const { name, value } = e.target
-    setNewUserForm({ ...newUserForm, [name]: value })
-    if (name === "username" || name === "password") {
-    setLoginForm({ ...loginForm, [name]: value })
-    }
-  }
+  // form states
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [pfp, setPfp] = useState();
+  const [recieveEmails, setRecieveEmails] = useState(false);
 
   function handleLogin(){
     fetch("/login", {
@@ -38,31 +33,37 @@ export default function NewUser({ updateUser }) {
 
   function handleNewUser(e) {
     e.preventDefault()
-    // setNewUserForm({ ...newUserForm, recieve_emails: recieveEmails })
-    console.log(newUserForm)
+    const newUserForm = new FormData();
+    newUserForm.append("username", username)
+    newUserForm.append("email", email)
+    newUserForm.append("password", password)
+    newUserForm.append("recieve_emails", recieveEmails)
+    newUserForm.append("pfp", pfp)
 
     fetch("/users", {
       method: "POST",
-      headers: {"content-type": "application/json"},
-      body: JSON.stringify(newUserForm)
+      body: newUserForm
     })
-    .then(r=>r.json())
-    .then(data=>console.log(data))
-    .then(handleLogin)
+    .then(r=>{
+      if(r.ok){
+        r.json()
+        .then(data=>console.log(data))
+        .then(setLoginForm({...loginForm, username: username, password: password}))
+        .then(handleLogin)
+      }
+    })
   }
 
   return (
-    <div>
-      <div className="m-4 flex justify-center rounded border-2 border-neutral-content">
-        <form onSubmit={(e) => {
-          // handleLogin
-          handleNewUser(e)
-        }} autoComplete="on" className="flex-wrap">
+    <div className="grid justify-items-center h-full">
+      <div className="m-4 flex justify-center border-4 rounded-lg my-4 md:w-5/12 md:p-4 border-neutral-content bg-base-200">
+        <form
+          onSubmit={(e) =>{handleNewUser(e)}}
+          autoComplete="on">
           <input
             className="input input-bordered bg-base-300"
-            name="username"
             required
-            onChange={handleChange}
+            onChange={(e)=>setUsername(e.target.value)}
             type="text"
             placeholder="Username"
             autoComplete="username" />
@@ -70,7 +71,7 @@ export default function NewUser({ updateUser }) {
             className="input input-bordered bg-base-300"
             name="email"
             required
-            onChange={handleChange}
+            onChange={(e)=>setEmail(e.target.value)}
             type="email"
             placeholder="Email@email.com"
             autoComplete="username" />
@@ -78,28 +79,34 @@ export default function NewUser({ updateUser }) {
             <input
               className="input input-bordered bg-base-300"
               type={isVis ? "text" : "password"}
-              name="password"
               required
               placeholder="Password"
-              onChange={handleChange}
+              onChange={(e)=>setPassword(e.target.value)}
               autoComplete="current-password"
             />
             <button type="button" className="absolute left-48 my-4" onClick={() => setIsVis(!isVis)}>
               {isVis ? <AiFillEye /> : <AiFillEyeInvisible />}
             </button>
+          </div>
+          <input
+              type="file"
+              className="file-input file-input-bordered w-full max-w-xs bg-base-300"
+              onChange={(e)=>setPfp(e.target.files[0])}
+              accept="image/*"
+            />
             <h3>Would you like to recieve emails when you upload an entry?</h3>
             <label className="swap">
-            <input onClick={()=> {
-              setRecieveEmails(!recieveEmails)
-              }} type="checkbox" />
+              <input
+                onClick={()=> {setRecieveEmails(!recieveEmails)}}
+                type="checkbox"
+              />
               <div className="swap-on">YES</div>
               <div className="swap-off">NO</div>
             </label>
-          </div>
           <button type="submit">Create Account</button>
         </form>
       </div>
-      <h3>Already have an account? <button className="btn" onClick={() => navigate("/users/new")}>Login</button></h3>
+      <h3>Already have an account? <button className="btn" onClick={() => navigate("/")}>Login</button></h3>
     </div>
   );
 }
