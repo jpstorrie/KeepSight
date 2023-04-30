@@ -6,6 +6,7 @@ export default function Login({updateUser, user, darkMode}) {
 
   const navigate = useNavigate()
   const initVals = { username: "", password:"" }
+  // const initVals = { username: null, password: null }
 
   const [loginForm, setLoginForm] = useState(initVals)
   const [isVis, setIsVis] = useState(false);

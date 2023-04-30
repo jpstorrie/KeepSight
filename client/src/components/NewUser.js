@@ -1,18 +1,44 @@
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
 export default function NewUser({ updateUser }) {
   const navigate = useNavigate()
 
-  const [loginForm, setLoginForm] = useState({username: "", password: "",})
   const [isVis, setIsVis] = useState(false);
-  // form states
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [pfp, setPfp] = useState();
   const [recieveEmails, setRecieveEmails] = useState(false);
+  const [loginForm, setLoginForm] = useState({username: username, password: password})
+
+  useEffect(()=>{
+    setLoginForm({ username: username, password: password})
+  },[username, password])
+
+  function handleNewUser(e) {
+    e.preventDefault();
+    const newUserForm = new FormData();
+    newUserForm.append("username", username)
+    newUserForm.append("email", email)
+    newUserForm.append("password", password)
+    newUserForm.append("recieve_emails", recieveEmails)
+    newUserForm.append("pfp", pfp)
+    console.log(loginForm)
+
+    fetch("/users", {
+      method: "POST",
+      body: newUserForm
+    })
+    .then(r=>{
+      if(r.ok){
+        r.json()
+        .then(data=>console.log(data))
+        .then(handleLogin)
+      }
+    })
+  }
 
   function handleLogin(){
     fetch("/login", {
@@ -29,29 +55,6 @@ export default function NewUser({ updateUser }) {
   }
   else{r.json().then(message=>console.log(message.error))}
   })
-  }
-
-  function handleNewUser(e) {
-    e.preventDefault()
-    const newUserForm = new FormData();
-    newUserForm.append("username", username)
-    newUserForm.append("email", email)
-    newUserForm.append("password", password)
-    newUserForm.append("recieve_emails", recieveEmails)
-    newUserForm.append("pfp", pfp)
-
-    fetch("/users", {
-      method: "POST",
-      body: newUserForm
-    })
-    .then(r=>{
-      if(r.ok){
-        r.json()
-        .then(data=>console.log(data))
-        .then(setLoginForm({...loginForm, username: username, password: password}))
-        .then(handleLogin)
-      }
-    })
   }
 
   return (
