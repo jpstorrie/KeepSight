@@ -25,7 +25,6 @@ export default function NewUser({ updateUser }) {
     newUserForm.append("password", password)
     newUserForm.append("recieve_emails", recieveEmails)
     newUserForm.append("pfp", pfp)
-    console.log(loginForm)
 
     fetch("/users", {
       method: "POST",
@@ -59,7 +58,7 @@ export default function NewUser({ updateUser }) {
 
   return (
     <div className="grid justify-items-center h-full">
-      <div className="m-4 flex justify-center border-4 rounded-lg my-4 md:w-5/12 md:p-4 border-neutral-content bg-base-200">
+      <div className="m-4 grid justify-items-center grid-flow-col grid-rows-2 gap-6 border-4 rounded-lg my-4 md:w-11/12 md:p-4 border-neutral-content bg-base-200">
         <form
           onSubmit={(e) =>{handleNewUser(e)}}
           autoComplete="on">
@@ -85,6 +84,14 @@ export default function NewUser({ updateUser }) {
               required
               placeholder="Password"
               onChange={(e)=>setPassword(e.target.value)}
+              autoComplete="current-password"
+            />
+            <input
+              className="input input-bordered bg-base-300"
+              type={isVis ? "text" : "password"}
+              required
+              placeholder="Verify Password"
+              // onChange={(e)=>setPassword(e.target.value)}
               autoComplete="current-password"
             />
             <button type="button" className="absolute left-48 my-4" onClick={() => setIsVis(!isVis)}>

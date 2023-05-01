@@ -10,7 +10,7 @@ export default function ChildForm({ setName, setPicture, submitForm, toggleFormV
                     <input className="input input-bordered w-full max-w-xs"
                         required onChange={(e) => setName(e.target.value)} name="name" type="text" placeholder="Child's Name" />
                 </div>
-                <div className="">
+                <div className="form-control w-full max-w-xs">
                     <label className="label">
                         <span className="label-text">Profile Picture</span>
                     </label>
