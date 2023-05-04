@@ -11,11 +11,11 @@ export default function NewUser({ updateUser }) {
   const [username, setUsername] = useState("");
   const [pfp, setPfp] = useState();
   const [recieveEmails, setRecieveEmails] = useState(false);
-  const [loginForm, setLoginForm] = useState({username: username, password: password})
+  const [loginForm, setLoginForm] = useState({ username: username, password: password })
 
-  useEffect(()=>{
-    setLoginForm({ username: username, password: password})
-  },[username, password])
+  useEffect(() => {
+    setLoginForm({ username: username, password: password })
+  }, [username, password])
 
   function handleNewUser(e) {
     e.preventDefault();
@@ -30,90 +30,91 @@ export default function NewUser({ updateUser }) {
       method: "POST",
       body: newUserForm
     })
-    .then(r=>{
-      if(r.ok){
-        r.json()
-        .then(data=>console.log(data))
-        .then(handleLogin)
-      }
-    })
+      .then(r => {
+        if (r.ok) {
+          r.json()
+            .then(handleLogin)
+        }
+      })
   }
 
-  function handleLogin(){
+  function handleLogin() {
     fetch("/login", {
       method: "POST",
-      headers: {"content-type":"application/json"},
+      headers: { "content-type": "application/json" },
       body: JSON.stringify(loginForm)
     })
-    .then(r=>{
-      if(r.ok){
-        r.json().then(user=>{
-        updateUser(user)
-        navigate("/")
-    })
-  }
-  else{r.json().then(message=>console.log(message.error))}
-  })
+      .then(r => {
+        if (r.ok) {
+          r.json().then(user => {
+            updateUser(user)
+            navigate("/")
+          })
+        }
+        else { r.json().then(message => console.log(message.error)) }
+      })
   }
 
   return (
     <div className="grid justify-items-center h-full">
-      <div className="m-4 grid justify-items-center grid-flow-col grid-rows-2 gap-6 border-4 rounded-lg my-4 md:w-11/12 md:p-4 border-neutral-content bg-base-200">
+      <div className="m-4 border-4 rounded-lg my-4 md:w-11/12 md:p-4 border-neutral-content bg-base-200">
         <form
-          onSubmit={(e) =>{handleNewUser(e)}}
+          onSubmit={(e) => { handleNewUser(e) }}
           autoComplete="on">
           <input
-            className="input input-bordered bg-base-300"
+            className="input input-lg input-bordered bg-base-300 m-4"
             required
-            onChange={(e)=>setUsername(e.target.value)}
+            onChange={(e) => setUsername(e.target.value)}
             type="text"
             placeholder="Username"
             autoComplete="username" />
           <input
-            className="input input-bordered bg-base-300"
+            className="input input-lg input-bordered bg-base-300 m-4"
             name="email"
             required
-            onChange={(e)=>setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             type="email"
             placeholder="Email@email.com"
             autoComplete="username" />
           <div className="mb-4 flex relative">
             <input
-              className="input input-bordered bg-base-300"
+              className="input input-lg input-bordered bg-base-300 m-4"
               type={isVis ? "text" : "password"}
               required
               placeholder="Password"
-              onChange={(e)=>setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
               autoComplete="current-password"
             />
             <input
-              className="input input-bordered bg-base-300"
+              className="input input-lg input-bordered bg-base-300 m-4"
               type={isVis ? "text" : "password"}
               required
               placeholder="Verify Password"
-              // onChange={(e)=>setPassword(e.target.value)}
+              // onChange={(e)=>setVer(e.target.value)}
               autoComplete="current-password"
             />
-            <button type="button" className="absolute left-48 my-4" onClick={() => setIsVis(!isVis)}>
+            <button type="button" className="text-2xl absolute left-60 my-9" onClick={() => setIsVis(!isVis)}>
               {isVis ? <AiFillEye /> : <AiFillEyeInvisible />}
             </button>
           </div>
           <input
-              type="file"
-              className="file-input file-input-bordered w-full max-w-xs bg-base-300"
-              onChange={(e)=>setPfp(e.target.files[0])}
-              accept="image/*"
-            />
+            type="file"
+            className="file-input file-input-bordered w-xs bg-base-300 float-left m-4"
+            onChange={(e) => setPfp(e.target.files[0])}
+            accept="image/*"
+          />
+          <div className="bg-base-300">
             <h3>Would you like to recieve emails when you upload an entry?</h3>
             <label className="swap">
               <input
-                onClick={()=> {setRecieveEmails(!recieveEmails)}}
+                onClick={() => { setRecieveEmails(!recieveEmails) }}
                 type="checkbox"
               />
               <div className="swap-on">YES</div>
               <div className="swap-off">NO</div>
             </label>
-          <button type="submit">Create Account</button>
+          </div>
+          <button className="btn btn-outline" type="submit">Create Account</button>
         </form>
       </div>
       <h3>Already have an account? <button className="btn" onClick={() => navigate("/")}>Login</button></h3>
