@@ -1,17 +1,22 @@
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai"
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import ValidationCard from "./ValidationCard"
 
 export default function NewUser({ updateUser }) {
   const navigate = useNavigate()
 
   const [isVis, setIsVis] = useState(false);
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState(null);
+  const [verification, setVer] = useState(null);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [pfp, setPfp] = useState();
   const [recieveEmails, setRecieveEmails] = useState(false);
   const [loginForm, setLoginForm] = useState({ username: username, password: password })
+  const [validCardVis, setValidCardVis] = useState(false);
+
+
 
   useEffect(() => {
     setLoginForm({ username: username, password: password })
@@ -76,7 +81,11 @@ export default function NewUser({ updateUser }) {
             type="email"
             placeholder="Email@email.com"
             autoComplete="username" />
-          <div className="mb-4 flex relative">
+          <div
+            className="mb-4 flex relative"
+            onFocus={() => setValidCardVis(true)}
+            onBlur={() => setValidCardVis(false)}
+          >
             <input
               className="input input-lg input-bordered bg-base-300 m-4"
               type={isVis ? "text" : "password"}
@@ -84,13 +93,15 @@ export default function NewUser({ updateUser }) {
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
               autoComplete="current-password"
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+              title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
             />
             <input
               className="input input-lg input-bordered bg-base-300 m-4"
               type={isVis ? "text" : "password"}
               required
               placeholder="Verify Password"
-              // onChange={(e)=>setVer(e.target.value)}
+              onChange={(e)=>setVer(e.target.value)}
               autoComplete="current-password"
             />
             <button type="button" className="text-2xl absolute left-60 my-9" onClick={() => setIsVis(!isVis)}>
@@ -116,6 +127,7 @@ export default function NewUser({ updateUser }) {
           </div>
           <button className="btn btn-outline" type="submit">Create Account</button>
         </form>
+        {validCardVis ? <ValidationCard password={password} verification={verification} /> : null}
       </div>
       <h3>Already have an account? <button className="btn" onClick={() => navigate("/")}>Login</button></h3>
     </div>
