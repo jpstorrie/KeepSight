@@ -3,9 +3,8 @@ export default function ValidationCard({ password, verification }) {
     var lowerCaseLetters = /[a-z]/g;
     var upperCaseLetters = /[A-Z]/g;
     var numbers = /[0-9]/g;
-    if (password) {
         return (
-            <div id="message">
+            <div className=" p-4">
                 <h3>Password must contain the following:</h3>
                 <p id="letter" className={password.match(lowerCaseLetters) ? "valid" : "invalid"}>A <b>lowercase</b> letter</p>
                 <p id="capital" className={password.match(upperCaseLetters) ? "valid" : "invalid"}>A <b>capital (uppercase)</b> letter</p>
@@ -15,4 +14,3 @@ export default function ValidationCard({ password, verification }) {
             </div>
         )
     }
-}

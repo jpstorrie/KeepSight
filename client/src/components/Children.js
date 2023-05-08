@@ -42,7 +42,7 @@ export default function Children({ user }) {
     if(children.length===0 && !formVis){
         return (<div className="flex-wrap justify-center pt-20">
             <h1 className="font-bold text-3xl p-6">Welcome {user.username}!</h1>
-            <h1 className="">IT LOOKS LIKE YOU DON'T HAVE ANY CHILDREN OR PETS ASSOCIATED WITH YOUR ACCOUNT</h1>
+            <h1 className="">IT LOOKS LIKE YOU DON'T HAVE ANY PEOPLE ASSOCIATED WITH YOUR ACCOUNT</h1>
             <button className="link" onClick={()=>toggleFormVis(!formVis)}>ADD THEM HERE</button>
             </div>
         )
