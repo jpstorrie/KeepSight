@@ -99,7 +99,7 @@ console.log(pfp)
 
             <div className="form-control w-full max-w-xs">
               <label className="label pb-0 ml-4">
-                <h1 className="label-text">Pick a Profile Picture</h1>
+                <h1 className="label-text">Upload a Profile Picture</h1>
               </label>
               <input
                 type="file"
